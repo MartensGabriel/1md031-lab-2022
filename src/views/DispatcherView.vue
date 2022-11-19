@@ -7,10 +7,13 @@
            {{burger.amount +"x"+burger.name}}
          </div>
           <div>
-           {{order.details.fullName}}
-           {{order.details.mailAddress}}
-           {{order.details.paymentMethod}}
-           {{order.details.gender}}
+           {{"Name: " +  order.details.fullName}}
+            <br>
+           {{"Mail Address: " + order.details.mailAddress}}
+            <br>
+           {{"Payment Method: " + order.details.paymentMethod}}
+            <br>
+           {{"Gender: " + order.details.gender}}
           </div>
          </div>
 

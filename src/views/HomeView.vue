@@ -194,7 +194,10 @@ export default {
         console.log(this.CustomerInfo.selectedBurgers[i])
         if (this.CustomerInfo.selectedBurgers[i].name === event.name) {
           this.CustomerInfo.selectedBurgers[i].amount = event.amount
-        return;
+          if (event.amount == 0) {
+            this.CustomerInfo.selectedBurgers.splice(i, 1)
+          }
+          return;
         }
       }
 

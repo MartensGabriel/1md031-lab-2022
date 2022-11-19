@@ -45,7 +45,7 @@
          if (this.amountOrdered >0)
            this.amountOrdered-=1;
          else return this.amountOrdered
-         this.$emit("unSelectedBurger", {name: this.burger.name, amount: this.amountOrdered})
+         this.$emit("selectedBurger", {name: this.burger.name, amount: this.amountOrdered})
 
          //console.log(this.burger.name, this.amountOrdered)
        }
