@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Enkel ostburgare",
+    "url": "https://www.publicdomainpictures.net/pictures/180000/nahled/hearty-cheeseburger.jpg",
+    "kcal": "2000 kCal",
+    "gluten": "gluten",
+    "meat": "meat"
+
+  },
+  {
+    "name": "Dubbel ostburgare",
+    "url": "https://www.johansmat.se/wp-content/uploads/2018/11/smashed-cheeseburger.jpg",
+    "kcal": "2500 kCal",
+    "gluten": "gluten" ,
+    "meat": "meat"
+
+  },
+
+  {
+
+    "name": "Grov ostburgare",
+    "url": "https://preview.redd.it/c85s7560o6o41.jpg?auto=webp&s=702f63f195380ed5a430a0574d6e014a0d6d423b",
+    "kcal": "3000 kCal",
+    "gluten":"gluten",
+    "meat": "meat"
+
+  }
+]

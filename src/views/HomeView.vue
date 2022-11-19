@@ -1,14 +1,12 @@
 <template>
 
-  <div>
+
+<div>
   <header class = "image">
 
     <h1 class = "imagetext">
       Welcome to BurgerNation
     </h1>
-    <img id = "kossa" src="https://www.dartagnan.com/on/demandware.static/-/Sites-dartagnan-Library/default/dw3d232de5/images/content/what-is-wagyu-beef.jpg?sw=660&strip=false" alt="Startsida">
-
-
   </header>
 
   <h2>Välj en burgare nedan</h2>
@@ -16,78 +14,18 @@
 
 
 
+
   <main>
-    <section id = "menyn">
       <div class = "wrapper">
-        <div class="box a">
-          <h3>Enkel ostburgare</h3>
-          <img src = "https://www.publicdomainpictures.net/pictures/180000/nahled/hearty-cheeseburger.jpg" alt = "enkelburgare" style = "width:200px;height:200px;">
-          <ul>
-            <li>
-              Isbergsallad
-            </li>
-            <li>
-              90 g Wagyu puck
-            </li>
-            <li>
-              En ostskiva
-            </li>
-            <li>
-              Omslutet av Brioche
-            </li>
-            <li class = "gluten">
-              Innehåller gluten och kött
-            </li>
-          </ul>
-        </div>
 
-        <div class="box b">
-          <h3>Dubbel ostburgare</h3>
-          <img src = "https://www.johansmat.se/wp-content/uploads/2018/11/smashed-cheeseburger.jpg" alt = "dubbelburgare" style="width:200px;height:200px;">
-          <ul>
-            <li>
-              Isbergsallad
-            </li>
-            <li>
-              2 x 90 g Wagyu puck
-            </li>
-            <li>
-              2 x En ostskiva
-            </li>
-            <li>
-              Omslutet av Brioche
-            </li>
-            <li class = "gluten">
-              Innehåller gluten och kött
-            </li>
-          </ul>
-        </div>
-
-        <div class="box c">
-          <h3>Grov ostburgare</h3>
-          <img src = "https://preview.redd.it/c85s7560o6o41.jpg?auto=webp&s=702f63f195380ed5a430a0574d6e014a0d6d423b" alt = "dubbelburgare" style = "width:200px;height:200px;">
-          <ul>
-            <li>
-              Isbergsallad
-            </li>
-            <li>
-              3 x 90 g Wagyu puck
-            </li>
-            <li>
-              3 x En ostskiva
-            </li>
-            <li>
-              Omslutet av Brioche
-            </li>
-            <li class = "gluten">
-              Innehåller gluten och kött
-            </li>
-          </ul>
-        </div>
+            <Burger v-for="burger in burgers"
+                    v-bind:burger="burger"
+                    v-bind:key = "burger.name"
+                    v-on:selectedBurger="setSelectedBurger($event)"/>
 
       </div>
-    </section>
 
+  <form>
     <section id="kontakt">
       <h3>
         Beställningsinformation
@@ -95,21 +33,21 @@
       <form>
         <p>
           <label for="Namn">För- och efternamn</label><br>
-          <input type="text" id="Namn" name="fn" required="required" placeholder="Namn">
+          <input type="text" id="fn" v-model="fn" required="required" placeholder="Namn">
         </p>
         <p>
           <label for="Mejladress">Mejladress</label><br>
-          <input type="email" id="Mejladress" name="em" required="required" placeholder="Mejladress">
+          <input type="email" id="ma" v-model="ma" required="required" placeholder="Mejladress">
         </p>
 
-        <p>
+<!--        <p>
           <label for="Adress">Gatunamn</label><br>
-          <input type="Adress" id="Adress" name="em" required="required" placeholder="Adress">
+          <input type="Adress" id="sn" v-model="sn" required="required" placeholder="Adress">
         </p>
         <p>
           <label for="Husnummer">Husnummer</label><br>
-          <input type="Adress" id="Husnummer" name="em" required="required" placeholder="Husnummer">
-        </p>
+          <input type="Adress" id="hn" v-model="hn" required="required" placeholder="Husnummer">
+        </p>-->
       </form>
     </section>
 
@@ -118,8 +56,8 @@
 
       <p>
         <label for="Betalningssätt">Betalningssätt: </label>
-        <select id="Betalningssätt" name="rcp">
-          <option>Debit- eller kreditkort</option>
+        <select id="pm" name="pm">
+          <option selected = "selected"> Debit eller kredit </option>
           <option>Swish</option>
           <option>Paypal</option>
           <option>Klarna</option>
@@ -133,24 +71,36 @@
         Kön
       </h3>
 
-      <input type="radio" id="Man" name="fav_language" value="Man" checked = "checked">
+      <input type="radio" id="gender" name="gender" value="Man">
       <label for="Man">Man</label><br>
 
-      <input type="radio" id="Kvinna" name="fav_language" value="Kvinna">
+      <input type="radio" id="gender" name="gender" value="Kvinna">
       <label for="Kvinna">Kvinna</label><br>
 
-      <input type="radio" id="Annat" name="fav_language" value="Annat">
+      <input type="radio" id="gender" name="gender" value="Annat">
       <label for="Annat">Annat</label><br>
 
     </section>
+  </form>
+  <h2>Tryck på leveransadressen </h2>
+    <div id = "map">
+      <div class ="map" id = "dots" v-on:click="setLocation">
+        <div
+          v-bind:style="{ left: this.CustomerInfo.location.x + 'px',
+                        top: this.CustomerInfo.location.y + 'px'}">
+          T
+          </div>
+      </div>
+    </div>
 
-    <section>
       <br>
-      <button type="submit">
-        <img src="https://thumbs.dreamstime.com/b/nocamerasign-194400795.jpg" alt = "beställ" style="width:30px;height:30px;">
+      <button class = "orderButton" type="submit" v-on:click="orderClick()">
+        <img src="https://thumbs.dreamstime.com/b/nocamerasign-194400795.jpg" alt = "beställ" style="width:80px;height:80px;">
         Lägg beställning
       </button>
-    </section>
+
+
+
 
 
 
@@ -160,6 +110,7 @@
       <br>
       Mobil: 070333333
     </section>
+
 
 
   </main>
@@ -177,48 +128,123 @@
 <script>
 import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
+import menu from '../assets/menu.json'
 
 const socket = io();
 
-function MenuItem(name, url, kcal, gluten, meat) {
+const myMenu = menu;
 
+
+/*function MenuItem(name, url, kcal, gluten, meat) {
   this.name = name;
   this.url = url;
   this.kcal = kcal;
   this.gluten = gluten;
   this.meat = meat;
-}
 
-const burgare1 = new MenuItem("Enkel ostburgare","https://www.publicdomainpictures.net/pictures/180000/nahled/hearty-cheeseburger.jpg", "2000 kCal", "gluten", "kött");
-const burgare2 = new MenuItem("Dubbel ostburgare", "https://www.johansmat.se/wp-content/uploads/2018/11/smashed-cheeseburger.jpg", "2500 kCal", "gluten", "kött");
-const burgare3 = new MenuItem("Grov ostburgare", "https://preview.redd.it/c85s7560o6o41.jpg?auto=webp&s=702f63f195380ed5a430a0574d6e014a0d6d423b", "3000 kCal", "gluten", "kött");
-const Menu = [burgare1, burgare2, burgare3];
+
+}*/
+
+//const burgare1 = new MenuItem("Enkel ostburgare","https://www.publicdomainpictures.net/pictures/180000/nahled/hearty-cheeseburger.jpg", "2000 kCal", "gluten", "nötkött");
+//const burgare2 = new MenuItem("Dubbel ostburgare", "https://www.johansmat.se/wp-content/uploads/2018/11/smashed-cheeseburger.jpg", "2500 kCal", "gluten", "nötkött");
+//const burgare3 = new MenuItem("Grov ostburgare", "https://preview.redd.it/c85s7560o6o41.jpg?auto=webp&s=702f63f195380ed5a430a0574d6e014a0d6d423b", "3000 kCal", "gluten", "nötkött");
+
+//const burgerMenu = [burgare1, burgare2, burgare3];
+const burgerMenu = [myMenu[0], myMenu[1], myMenu[2]];
 
 
 export default {
   name: 'HomeView',
   components: {
-    // eslint-disable-next-line vue/no-unused-components
+
     Burger
   },
   data: function () {
     return {
-      burgers: Menu
+      burgers: burgerMenu,
+
+      CustomerInfo: {
+        selectedBurgers:[],
+        fullName: "",
+        mailAddress:"",
+        //streetName:"",
+        //houseNumber:"",
+        paymentMethod:"",
+        gender:"",
+        location: {
+          x: 0,
+          y: 0
+        }
+      }
     }
   },
   methods: {
+
+    setLocation: function(event) {
+      var offset = {x: event.currentTarget.getBoundingClientRect().left,
+        y: event.currentTarget.getBoundingClientRect().top};
+
+      this.CustomerInfo.location.x = event.clientX -50 -offset.x;
+      this.CustomerInfo.location.y = event.clientY -50- offset.y;
+    },
+
+    setSelectedBurger: function(event){
+
+      for(let i = 0;i<this.CustomerInfo.selectedBurgers.length; i++) {
+        console.log(this.CustomerInfo.selectedBurgers[i])
+        if (this.CustomerInfo.selectedBurgers[i].name === event.name) {
+          this.CustomerInfo.selectedBurgers[i].amount = event.amount
+        return;
+        }
+      }
+
+
+
+
+      this.CustomerInfo.selectedBurgers.push(event);
+      console.log(this.CustomerInfo.selectedBurgers);
+    },
+
+
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
     addOrder: function (event) {
       var offset = {x: event.currentTarget.getBoundingClientRect().left,
                     y: event.currentTarget.getBoundingClientRect().top};
+
+      this.CustomerInfo.location.x = event.clientX -10 - offset.x;
+      this.CustomerInfo.location.y = event.clientY -10 - offset.y;
+
+
+
+    },
+    orderClick: function() {
+      this.CustomerInfo.fullName = document.getElementById("fn").value;
+      this.CustomerInfo.mailAddress = document.getElementById("ma").value;
+      //this.CustomerInfo.streetName = document.getElementById("sn").value;
+      //this.CustomerInfo.houseNumber = document.getElementById("hn").value;
+      this.CustomerInfo.paymentMethod = document.getElementById("pm").value;
+
+
+      //Inspiration taget från; https://www.javatpoint.com/how-to-check-a-radio-button-using-javascript
+      const genderChosen = document.getElementsByName("gender");
+      const genderChecked = Array.from(genderChosen).find((radio)=>radio.checked);
+      this.CustomerInfo.gender = genderChecked.value;
+
+
+      console.log(this.CustomerInfo);
+
       socket.emit("addOrder", { orderId: this.getOrderNumber(),
-                                details: { x: event.clientX - 10 - offset.x,
-                                           y: event.clientY - 10 - offset.y },
-                                orderItems: ["Beans", "Curry"]
-                              }
-                 );
+            details: { x: this.CustomerInfo.location.x,
+              y: this.CustomerInfo.location.y,
+              fullName: this.CustomerInfo.fullName,
+              mailAddress: this.CustomerInfo.mailAddress,
+              paymentMethod: this.CustomerInfo.paymentMethod,
+              gender: this.CustomerInfo.gender},
+            orderItems: this.CustomerInfo.selectedBurgers
+          }
+      );
     }
   }
 }
@@ -231,21 +257,16 @@ export default {
 body {
   font-family: Calibri;
   font-size: 20px;
-}
-
-.gluten {
-  color: #ff5500;
-  text-transform: uppercase;
+  /*noinspection CssUnknownTarget*/
+  background-image: url("https://media.istockphoto.com/vectors/seamless-op-art-80s-style-vector-wave-pattern-vector-id1140149373?k=20&m=1140149373&s=612x612&w=0&h=X_TAhGFEyUMpGsZcAvotcoyrbqL_9N9ovPuyz6bREZY=");
 }
 
 
-#menyn {
-  background-color: black;
-  color: white
-}
+
 
 #kontakt {
-  border-style: solid;
+  border-style: dashed;
+  background-color: white;
 }
 
 button:hover {
@@ -253,12 +274,18 @@ button:hover {
   cursor: pointer;
 }
 
-button{
-  margin: 30px;
+
+
+.orderButton {
+  margin: 80px;
+  font-size: larger;
+  background-color: darkcyan;
 }
 
 section {
   margin: 50px;
+  background-color: white;
+  border-style: dashed;
 }
 
 div {
@@ -268,54 +295,68 @@ div {
 .image {
   margin-left: 50px;
   margin-right: 50px;
-
-
-
   height: 300px;
   overflow: hidden;
+  background-color: black;
+  border-style: dotted; color: white;
 
 }
 
 .imagetext {
   position: absolute;
   top: 150px;
-  width: 100%;
+  width: 80%;
   margin: 0 auto;
   text-align:center;
+  color: white;
+  font-family: "Bauhaus 93";
+  font-size: 60px;
 
 }
 
-#kossa {
-  width: 100%;
-  height: auto;
-  opacity: 0.5;
-
-}
 
 .wrapper {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 350px 350px 350px;
+  display: inline-grid;
+  grid-gap: 1px;
+  grid-template-columns: 400px 400px 400px;
+  justify-content: center;
   background-color: black;
   color: #444;
+
 }
 
-.box {
-  background-color: #444;
-  color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 150%;
+
+
+footer{
+  background-color: white;
+  border-style: dashed;
 }
 
-.a {
-  grid-column: 1 ;
+.map {
+  width: 1920px;
+  height: 1078px;
+  background-image: url("@/assets/polacks.jpg");
+  margin: auto;
+
 }
-.b {
-  grid-column: 2 ;
+
+#map {
+  width: 1000px;
+  height: 600px;
+  overflow:scroll;
+  margin:auto;
 }
-.c {
-  grid-column: 3 ;
+
+
+
+#dots div {
+  position: absolute;
+  background: black;
+  color: white;
+  border-radius: 10px;
+  width:20px;
+  height:20px;
+  text-align: center;
 }
 
 </style>
