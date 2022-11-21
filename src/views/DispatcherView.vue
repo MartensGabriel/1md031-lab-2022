@@ -4,7 +4,7 @@
         <div v-for= "order in orders" v-bind:key="order">
           <h2>{{"Beställningsnummer: #" + order.orderId + ":"}} </h2>
          <div v-for = "burger in order.orderItems" v-bind:key="burger">
-           {{burger.amount +"x"+burger.name}}
+           {{burger.amount +"x "+burger.name}}
          </div>
           <div>
            {{"Name: " +  order.details.fullName}}
@@ -29,8 +29,11 @@
           </div>
       </div>
     </div>
+
   </template>
+
   <script>
+
   import io from 'socket.io-client'
   const socket = io();
   
@@ -41,18 +44,23 @@
         orders: null
       }
     },
+
     created: function () {
       socket.on('currentQueue', data =>
         this.orders = data.orders);
     },
+
     methods: {
       clearQueue: function () {
         socket.emit('clearQueue');
       }
     }
   }
+
   </script>
+
   <style>
+
   #orderList {
     top:1em;
     left:1em;
@@ -81,5 +89,6 @@
     height:20px;
     text-align: center;
   }
+
   </style>
   

@@ -1,19 +1,14 @@
 <template>
 
-
 <div>
   <header class = "image">
 
-    <h1 class = "imagetext">
+    <h1 class = "burgerNation">
       Welcome to BurgerNation
     </h1>
   </header>
 
-  <h2>Välj en burgare nedan</h2>
-  Tryck på den burgaren du vill ha
-
-
-
+  <h2>Välj burgare nedan genom att trycka på "select"</h2>
 
   <main>
       <div class = "wrapper">
@@ -26,7 +21,7 @@
       </div>
 
   <form>
-    <section id="kontakt">
+    <section id="contact">
       <h3>
         Beställningsinformation
       </h3>
@@ -40,7 +35,7 @@
           <input type="email" id="ma" v-model="ma" required="required" placeholder="Mejladress">
         </p>
 
-<!--        <p>
+<!--    <p>
           <label for="Adress">Gatunamn</label><br>
           <input type="Adress" id="sn" v-model="sn" required="required" placeholder="Adress">
         </p>
@@ -99,22 +94,14 @@
         Lägg beställning
       </button>
 
-
-
-
-
-
     <section>
       <h3>Customer information</h3>
       Adress: Ångströmsvägen 12
       <br>
-      Mobil: 070333333
+      Mobil: 0700000000
     </section>
 
-
-
   </main>
-
 
   <hr>
   <footer>
@@ -131,9 +118,7 @@ import io from 'socket.io-client'
 import menu from '../assets/menu.json'
 
 const socket = io();
-
 const myMenu = menu;
-
 
 /*function MenuItem(name, url, kcal, gluten, meat) {
   this.name = name;
@@ -141,7 +126,6 @@ const myMenu = menu;
   this.kcal = kcal;
   this.gluten = gluten;
   this.meat = meat;
-
 
 }*/
 
@@ -151,7 +135,6 @@ const myMenu = menu;
 
 //const burgerMenu = [burgare1, burgare2, burgare3];
 const burgerMenu = [myMenu[0], myMenu[1], myMenu[2]];
-
 
 export default {
   name: 'HomeView',
@@ -178,12 +161,14 @@ export default {
       }
     }
   },
+
   methods: {
 
     setLocation: function(event) {
       var offset = {x: event.currentTarget.getBoundingClientRect().left,
         y: event.currentTarget.getBoundingClientRect().top};
 
+      //Behövde modifiera nedan till ".. -50.." för att positionen skulle bli rätt. Vet ej varför men kanske för att min skärm är 4:3
       this.CustomerInfo.location.x = event.clientX -50 -offset.x;
       this.CustomerInfo.location.y = event.clientY -50- offset.y;
     },
@@ -191,7 +176,6 @@ export default {
     setSelectedBurger: function(event){
 
       for(let i = 0;i<this.CustomerInfo.selectedBurgers.length; i++) {
-        console.log(this.CustomerInfo.selectedBurgers[i])
         if (this.CustomerInfo.selectedBurgers[i].name === event.name) {
           this.CustomerInfo.selectedBurgers[i].amount = event.amount
           if (event.amount == 0) {
@@ -200,10 +184,6 @@ export default {
           return;
         }
       }
-
-
-
-
       this.CustomerInfo.selectedBurgers.push(event);
       console.log(this.CustomerInfo.selectedBurgers);
     },
@@ -212,13 +192,13 @@ export default {
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
+
     addOrder: function (event) {
       var offset = {x: event.currentTarget.getBoundingClientRect().left,
                     y: event.currentTarget.getBoundingClientRect().top};
 
       this.CustomerInfo.location.x = event.clientX -10 - offset.x;
       this.CustomerInfo.location.y = event.clientY -10 - offset.y;
-
 
 
     },
@@ -239,12 +219,14 @@ export default {
       console.log(this.CustomerInfo);
 
       socket.emit("addOrder", { orderId: this.getOrderNumber(),
-            details: { x: this.CustomerInfo.location.x,
+            details: {
+              x: this.CustomerInfo.location.x,
               y: this.CustomerInfo.location.y,
               fullName: this.CustomerInfo.fullName,
               mailAddress: this.CustomerInfo.mailAddress,
               paymentMethod: this.CustomerInfo.paymentMethod,
               gender: this.CustomerInfo.gender},
+
             orderItems: this.CustomerInfo.selectedBurgers
           }
       );
@@ -254,8 +236,6 @@ export default {
 </script>
 
 <style>
-/*empty*/
-/* Testkommentar */
 
 body {
   font-family: Calibri;
@@ -264,10 +244,7 @@ body {
   background-image: url("https://media.istockphoto.com/vectors/seamless-op-art-80s-style-vector-wave-pattern-vector-id1140149373?k=20&m=1140149373&s=612x612&w=0&h=X_TAhGFEyUMpGsZcAvotcoyrbqL_9N9ovPuyz6bREZY=");
 }
 
-
-
-
-#kontakt {
+#contact {
   border-style: dashed;
   background-color: white;
 }
@@ -276,8 +253,6 @@ button:hover {
   color: red;
   cursor: pointer;
 }
-
-
 
 .orderButton {
   margin: 80px;
@@ -302,10 +277,9 @@ div {
   overflow: hidden;
   background-color: black;
   border-style: dotted; color: white;
-
 }
 
-.imagetext {
+.burgerNation {
   position: absolute;
   top: 150px;
   width: 80%;
@@ -314,9 +288,7 @@ div {
   color: white;
   font-family: "Bauhaus 93";
   font-size: 60px;
-
 }
-
 
 .wrapper {
   display: inline-grid;
@@ -325,10 +297,7 @@ div {
   justify-content: center;
   background-color: black;
   color: #444;
-
 }
-
-
 
 footer{
   background-color: white;
@@ -340,7 +309,6 @@ footer{
   height: 1078px;
   background-image: url("@/assets/polacks.jpg");
   margin: auto;
-
 }
 
 #map {
@@ -349,8 +317,6 @@ footer{
   overflow:scroll;
   margin:auto;
 }
-
-
 
 #dots div {
   position: absolute;

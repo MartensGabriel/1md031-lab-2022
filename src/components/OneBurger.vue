@@ -13,27 +13,28 @@
         {{burger.meat}}
       </li>
     </ul>
+
     <button v-on:click="selectThisBurger"> select </button>
     <button v-on:click= "unSelectThisBurger"> unselect</button>
     Antal: {{ amountOrdered }}
+
   </div>
 </template>
   
   <script>
+
   export default {
     name: 'OneBurger',
     props: {
       burger: Object
     },
+
     data: function() {
       return {
 
         amountOrdered: 0,
       }
     },
-
-
-
 
    methods: {
        selectThisBurger: function(){
